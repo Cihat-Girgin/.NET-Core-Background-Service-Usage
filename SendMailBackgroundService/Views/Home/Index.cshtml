@@ -1,8 +1,38 @@
-﻿@{
+﻿@model List<UserMail>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form asp-action="Index" method="post">
+                <div class="form-group">
+                        <div class="text-danger">
+                            @ViewBag.Error
+                        </div>    
+                    <label name="Email" class="control-label">Email address</label>
+                    <input name="Email" class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <div class="col-12 mt-5">
+            <ul class="list-group">
+              <li class="list-group-item active">Email Addresses</li>
+             @foreach (var item in Model)
+             {
+                 <li class="list-group-item">@item.Email</li>
+             }
+            </ul>
+        </div>
+    </div>
 </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

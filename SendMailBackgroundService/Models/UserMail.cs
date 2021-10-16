@@ -1,7 +1,14 @@
-﻿namespace SendMailBackgroundService.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace SendMailBackgroundService.Models
 {
     public class UserMail
     {
-        public string EMail { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [Required(ErrorMessage = "This field is required!")]
+        [DisplayName("Email Address")]
+        public string Email { get; set; }
     }
 }

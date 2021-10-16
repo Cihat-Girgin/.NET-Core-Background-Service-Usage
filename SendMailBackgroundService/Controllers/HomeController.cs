@@ -12,17 +12,33 @@ namespace SendMailBackgroundService.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly InMemoryContext _context;
+        public HomeController(ILogger<HomeController> logger,InMemoryContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(new List<UserMail>());
         }
-
+        [HttpPost]
+        public IActionResult Index(UserMail userMail)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.UserMails.Add(userMail);
+                _context.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Error = ModelState.FirstOrDefault().Value.Errors.FirstOrDefault().ErrorMessage;
+                    
+                return View(_context.UserMails.ToList());
+            }
+            return View(_context.UserMails.ToList());
+        }
         public IActionResult Privacy()
         {
             return View();
