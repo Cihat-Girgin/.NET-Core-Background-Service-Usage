@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SendMailBackgroundService.BackgroundServices;
 using SendMailBackgroundService.Models;
 
 namespace SendMailBackgroundService
@@ -29,6 +30,7 @@ namespace SendMailBackgroundService
             {
                 context.UseInMemoryDatabase("TestDatabase");
             });
+            services.AddHostedService<PeriodicSendMailService>();
             services.AddControllersWithViews();
         }
 
